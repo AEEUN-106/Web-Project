@@ -1,0 +1,26 @@
+<style>
+.shortcut{
+
+}
+
+
+.Search{
+  font-size: 15px;
+  border: 1px solid LightGrey;
+  margin: 30px;
+  padding: 10px 0px;
+  position: relative;
+  text-align: center;
+
+}
+
+.Search #youtubeChannel{
+  width: 550px;
+}
+
+.ChannelInfo{
+  border: 1px solid LightGrey;
+  margin: 30px;
+  padding: 100px 0px;
+}
+</style>
