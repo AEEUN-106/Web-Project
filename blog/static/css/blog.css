@@ -23,4 +23,17 @@
   margin: 30px;
   padding: 100px 0px;
 }
+
+.Sorting{
+  border: 1px;
+  margin: 30px;
+  position: relative;
+}
+
+.Videos{
+  border: 1px solid LightGrey;
+  margin: 30px;
+  padding: 50px 0px;
+}
+
 </style>
