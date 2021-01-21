@@ -1,5 +1,6 @@
 from django.http import HttpResponse
+from django.shortcuts import render
+
 
 def index(request):
-    html = "<html><body>예쥬 페이지</body></html>"
-    return HttpResponse(html)
+    return render(request, 'blog/home.html', {})
