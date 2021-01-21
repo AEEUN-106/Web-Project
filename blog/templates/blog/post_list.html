@@ -17,80 +17,90 @@
       <title>Sort Video</title>
     </head>
     <body>
-      <div class ="shortcut" style = "text-align:right">
-          <a href = "https://www.youtube.com/" target  = "_blank" style = "text-decoration:none;font-size:13px">Youtube</a>
-      </div>
+      <!--사이트의 맨 위의 부분 사이트 이름 대신에 링크할 수 있는 사이트 등등..-->
+      <<header>
+        <div class ="shortcut" style = "text-align:right">
+            <a href = "https://www.youtube.com/" target  = "_blank" style = "text-decoration:none;font-size:13px">Youtube</a>
+        </div>
+      </header>
 
-      <!--검색하는 창 만들기  옆에 이모티콘과 검색창-->
+        <!--검색하는 창 만들기  옆에 이모티콘과 검색창-->
+    <nav>
       <section class ="Search">
         <form onSubmit = "goData()" method="POST">
           <label for = "youtubeChannel">input Chnnel's URL</label>
           <input type="url" name = "youtubeChannel" id = "youtubeChannel">
           <input type = "image" name = "sumbit" src = "https://svgsilh.com/svg/1093183.svg" alt = "Enter" width = 20 height = 20>
         </form>
-    </section>
+      </section>
+    </nav>
 
-    <!-- 검색한 유튜브의 채널의 이미지, 이름, 구독자수, 채널의 수 보여주는 공간 -->
-    <section class = "ChannelInfo">
+    <main>
+      <!-- 검색한 유튜브의 채널의 이미지, 이름, 구독자수, 채널의 수 보여주는 공간 -->
+      <section class = "ChannelInfo">
 
-    </section>
+      </section>
 
-    <!-- 년도, 월 별 검색 및 정렬 -->
-    <section class = "Sorting">
-        <form action = "" method="post" style="float:right; margin:10px">
-          {%csrf_token%}
-          {{form.as_p}}
-          <select id="year" style="width:80px;height:30px;"
-                name="location=this.value;">
-            <option>년</option>
-            <option value="2021">2021</option>
-            <option value="2020">2020</option>
-            <option value="2019">2019</option>
-            <option value="2018">2018</option>
-            <option value="2017">2017</option>
-            <option value="2016">2016</option>
-            <option value="2015">2015</option>
-            <option value="2014">2014</option>
-            <option value="2013">2013</option>
-            <option value="2012">2012</option>
-            <option value="2011">2011</option>
-            <option value="2010">2010</option>
-            <option value="2009">2009</option>
-            <option value="2008">2008</option>
-            <option value="2007">2007</option>
-            <option value="2006">2006</option>
-            <option value="2005">2005</option>
-          </select>
-          <select id="month" style="width:50px;height:30px;"
-                name="location=this.value;">
-            <option>월</option>
-            <option value="01">01</option>
-            <option value="02">02</option>
-            <option value="03">03</option>
-            <option value="04">04</option>
-            <option value="05">05</option>
-            <option value="06">06</option>
-            <option value="07">07</option>
-            <option value="08">08</option>
-            <option value="09">09</option>
-            <option value="10">10</option>
-            <option value="11">11</option>
-            <option value="12">12</option>
-          </select>
-          <select id="sorting" style="width:80px;height:30px;">
-            <option value="최신순">최신순</option>
-            <option value="오래된순">오래된순</option>
-            <option value="조회순">조회순</option>
-          </select>
-          <input type = "submit" value="검색"
-              class="btn btn-info btn-sm">
-        </form>
-    </section>
+      <!-- 년도, 월 별 검색 및 정렬 -->
+      <section class = "Sorting">
+          <form action = "" method="post" style="float:right; margin:10px">
+            {%csrf_token%}
+            {{form.as_p}}
+            <select id="year" style="width:80px;height:30px;"
+                  name="location=this.value;">
+              <option>년</option>
+              <option value="2021">2021</option>
+              <option value="2020">2020</option>
+              <option value="2019">2019</option>
+              <option value="2018">2018</option>
+              <option value="2017">2017</option>
+              <option value="2016">2016</option>
+              <option value="2015">2015</option>
+              <option value="2014">2014</option>
+              <option value="2013">2013</option>
+              <option value="2012">2012</option>
+              <option value="2011">2011</option>
+              <option value="2010">2010</option>
+              <option value="2009">2009</option>
+              <option value="2008">2008</option>
+              <option value="2007">2007</option>
+              <option value="2006">2006</option>
+              <option value="2005">2005</option>
+            </select>
+            <select id="month" style="width:50px;height:30px;"
+                  name="location=this.value;">
+              <option>월</option>
+              <option value="01">01</option>
+              <option value="02">02</option>
+              <option value="03">03</option>
+              <option value="04">04</option>
+              <option value="05">05</option>
+              <option value="06">06</option>
+              <option value="07">07</option>
+              <option value="08">08</option>
+              <option value="09">09</option>
+              <option value="10">10</option>
+              <option value="11">11</option>
+              <option value="12">12</option>
+            </select>
+            <select id="sorting" style="width:80px;height:30px;">
+              <option value="최신순">최신순</option>
+              <option value="오래된순">오래된순</option>
+              <option value="조회순">조회순</option>
+            </select>
+            <input type = "submit" value="검색"
+                class="btn btn-info btn-sm">
+          </form>
+      </section>
 
-    <!-- 해당 영상들 나오는 창-->
-    <section class = "Videos">
-      <iframe style="padding:20px;"width="400" height="225" src="https://www.youtube.com/embed/xjXv7X1lsYI" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-    </section>
+      <!-- 해당 영상들 나오는 창-->
+      <section class = "Videos">
+        <iframe style="padding:20px;"width="400" height="225" src="https://www.youtube.com/embed/xjXv7X1lsYI" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </section>
+
+
+    </main>
+
 
 
   </body>
