@@ -7,9 +7,9 @@
 
 
   <body>
-      <form>
-        <label> title 이름 들어가기 </label>
-        <input type="search"  placeholder="url input">
+      <form method="get" action="{% url 'result' %}">
+        <label> title 이름 들어가기 <input type="url"  placeholder="url input"> </label>
+        <input type="submit" value="검색">
       </form>
   </body>
-<html>
+</html>
