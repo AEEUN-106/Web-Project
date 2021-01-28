@@ -6,19 +6,13 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
-  <script>
-    function goData(){
-      var form = document.userinput;
-      form.action = "passing.php"
-    }
-    </script>
       <link rel = "stylesheet" href="{% static 'css/blog.css' %}" type = "text/css">
       <meta charset="utf-8">
       <title>Sort Video</title>
     </head>
     <body>
       <!--사이트의 맨 위의 부분 사이트 이름 대신에 링크할 수 있는 사이트 등등..-->
-      <<header>
+      <header>
         <div class ="shortcut" style = "text-align:right">
             <a href = "https://www.youtube.com/" target  = "_blank" style = "text-decoration:none;font-size:13px">Youtube</a>
         </div>
@@ -27,9 +21,9 @@
         <!--검색하는 창 만들기  옆에 이모티콘과 검색창-->
     <nav>
       <section class ="Search">
-        <form onSubmit = "goData()" method="POST">
+        <form action = {% url 'data_process' %} method="GET">
           <label for = "youtubeChannel">input Chnnel's URL</label>
-          <input type="url" name = "youtubeChannel" id = "youtubeChannel">
+          <input type="url" name = "Channel_Src">
           <input type = "image" name = "sumbit" src = "https://svgsilh.com/svg/1093183.svg" alt = "Enter" width = 20 height = 20>
         </form>
       </section>
@@ -38,6 +32,7 @@
     <main>
       <!-- 검색한 유튜브의 채널의 이미지, 이름, 구독자수, 채널의 수 보여주는 공간 -->
       <section class = "ChannelInfo">
+        <p>채널 이름 : {{channel_name}}</p>
 
       </section>
 
