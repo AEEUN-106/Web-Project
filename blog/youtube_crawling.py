@@ -87,7 +87,7 @@ def crawling(get_url,request):
 #     #options.headless = True       webpage open 유형
 # options.add_argument("window-size=1920x1080")
 # options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36")
-    
+
 # browser = webdriver.Chrome(options=options)
 # browser.get(url)
 
@@ -101,4 +101,4 @@ def crawling(get_url,request):
 # temp = soup.find(id = 'text-container')
 # print(temp.text)
 # # title = soup.find("yt-formatted-string", attrs = {"class":"style-scope ytd-channel-name"})
-# # print(title) 
+# # print(title)
