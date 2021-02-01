@@ -18,7 +18,8 @@ from django.urls import path, include
 from .views import index
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    #path('admin/', admin.site.urls),
     path('blog/',include ('blog.urls')),
+    path('progress/',include('blog.urls')),     # home.html에서 url입력하면 data 처리후 post_list.html에서 화면 보여주는 route
     path('', index),
 ]

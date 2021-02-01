@@ -7,9 +7,11 @@
 
 
   <body>
-      <form action = "" method = "get">
+    <section class = "input">
+      <form action = {% url 'data_process' %} method = "get">
         <label> title 이름 들어가기 </label>
-        <input type="search"  placeholder="url input">
+        <input type="url" name = "Channel_Src">
       </form>
+    </section>
   </body>
 </html>
