@@ -34,7 +34,12 @@
         </div>
         </div>
       </div>
-
-      <p>{{video_img}}</p>
+        <div class="TrendingVideo">
+          <span>
+            {% for video_img_url in video_img %}
+              <img id='video_img_url' src={{video_img_url}}>
+            {% endfor %}
+          </span>
+          </div>
   </body>
 </html>

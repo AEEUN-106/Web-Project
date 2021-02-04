@@ -69,3 +69,12 @@
   width: 90px;
   background: blue;
 }
+
+.TrendingVideo{
+  margin: 30px;
+  padding: 50px 10px 30px 10px;
+}
+
+.TrendingVideo #video_img_url{
+  padding: 5px;
+}
