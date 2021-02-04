@@ -8,6 +8,84 @@ import sys
 import io
 import re
 
+def main_crawling(request):
+    # youtube 정보를 한국어로 가지고 오는 방법
+    sys.stdout = io.TextIOWrapper(sys.stdout.detach(), encoding = 'utf-8')
+    sys.stderr = io.TextIOWrapper(sys.stderr.detach(), encoding = 'utf-8')
+    url = "https://www.youtube.com/feed/trending"
+
+
+    # Chrome 창을 열지않고 스크래핑하는 part
+    options = webdriver.ChromeOptions()
+    #options.headless = True       #webpage open 유형
+    options.add_argument("window-size=1920x1080")
+    options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36")
+    browser = webdriver.Chrome(options=options) 
+    browser.get(url)
+
+    SCROLL_PAUSE_TIME = 0.5     # 한번 스크롤 하고 멈출 시간 설정
+   
+
+    body = browser.find_element_by_tag_name('body')
+    #content = browser.find_element_by_id('content')
+
+    for i in range(3):
+
+        time.sleep(SCROLL_PAUSE_TIME)
+        height= browser.execute_script('return document.documentElement.scrollHeight')
+       
+        for i in range(5):
+            body.send_keys(Keys.END)
+            # body 본문에 END키를 입력(스크롤내림)
+            time.sleep(SCROLL_PAUSE_TIME)
+
+    soup = BeautifulSoup(browser.page_source, 'lxml')
+
+    all_videos = soup.find_all(id='dismissable')
+
+    video_img = []
+    video_src = []
+    video_title = []
+    video_channel_name = []
+    video_num = []
+    video_writing = []
+
+    
+    for video in all_videos:
+
+        # img = video.find('img',{'src':True})
+        # video_img.append(img['src'])
+
+        src = video.find('a',{'id':'thumbnail'})['href']+"https://www.youtube.com"
+        video_src.append(src)
+
+        title = video.find('a',{'id':'video-title'})['title']
+        video_title.append(title)
+
+        channel_name = video.find('a',{"class":"yt-simple-endpoint style-scope yt-formatted-string"}).text
+        video_channel_name.append(channel_name)
+
+        num = video.find('span',{'class':"style-scope ytd-video-meta-block"}).text
+        video_num.append(num)
+
+        writing = video.find('yt-formatted-string',{'id':'description-text'}).text
+        video_writing.append(writing)
+
+
+    trending_videos = {"video_img":video_img, "video_src":video_src, "video_title":video_title, "video_channel_name":video_channel_name,"video_num":video_num, "video_writing":video_writing}
+
+    browser.quit()
+
+    return render(request, 'blog/home.html',trending_videos)
+
+
+
+
+
+
+
+
+
 
 def crawling(get_url,request):
 
@@ -69,7 +147,7 @@ def crawling(get_url,request):
     view_num_regexp = re.compile(r'조회수')
 
     for video in all_videos:
-        # channel_name = video.find('span',{'class' : 'style-scope ytd-channel-name'})
+        
         title = video.find(id='video-title')
         title_list.append(title.text)
 
@@ -83,16 +161,6 @@ def crawling(get_url,request):
         video_upload_time = video.find_all('span',{'class':'style-scope ytd-grid-video-renderer'})
         temp = video_upload_time[1].text
         video_upload_time_list.append(temp)
-
-
-    # print(len(title_list))
-    # print(title_list)
-    # print(len(video_time_list))
-    # print(video_time_list)
-    # print(len(view_num_list))
-    # print(view_num_list)
-    # print(len(video_upload_time_list))
-    # print(video_upload_time_list)
 
     browser.quit()
     #return render(request, 'blog/post_list.html', {"channel_name":channel_name,"subscriber_count":subscriber_count,"channel_img":channel_img})
