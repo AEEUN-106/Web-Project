@@ -3,6 +3,11 @@
 
 }
 
+body{
+  margin-left: 100px;
+  margin-right: 100px;
+}
+
 a[href = "https://www.youtube.com/"]{
   text-decoration:none;
   font-size:13px;
