@@ -10,9 +10,11 @@ body{
 
 a[href = "https://www.youtube.com/"]{
   text-decoration:none;
-  font-size:13px;
+  font-size:15px;
   color: #c4302b;
   font-weight: bold;
+  text-align: right;
+  position: relative;
 }
 
 .ChannelInfo #profile_img{
@@ -20,13 +22,14 @@ a[href = "https://www.youtube.com/"]{
   overflow: hidden;
 }
 
+
+
 .Search{
   font-size: 15px;
-  margin: 10px;
-  padding: 10px 0px;
+  margin: 30px 30px -30px 30px;
+  padding: 20px;
+  text-align: right;
   position: relative;
-  text-align: center;
-
 }
 
 .Search #youtubeChannel{
@@ -51,7 +54,12 @@ a[href = "https://www.youtube.com/"]{
 .Videos{
   border: 1px solid LightGrey;
   margin: 30px;
-  padding: 50px 0px;
+  padding: 50px 10px 30px 10px;
+  /* padding: 30px 10px 30px 10px; */
+}
+
+.Videos #video_img_url{
+  padding: 5px;
 }
 
 </style>

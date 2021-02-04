@@ -42,6 +42,7 @@
 
       <!-- 년도, 월 별 검색 및 정렬 -->
       <section class = "Sorting">
+        <div>
           <form action = "" method="post" style="float:right; margin:10px">
             {%csrf_token%}
             {{form.as_p}}
@@ -90,18 +91,19 @@
             <input type = "submit" value="검색"
                 class="btn btn-info btn-sm">
           </form>
+        </div>
       </section>
 
       <!-- 해당 영상들 나오는 창-->
       <section class = "Videos">
-       <p>{{video_img}}</p>
-        <iframe style="padding:20px;"width="400" height="225" src="https://www.youtube.com/embed/xjXv7X1lsYI" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <span>
+            {% for video_img_url in video_img %}
+              <img id='video_img_url' src={{video_img_url}}>
+            {% endfor %}
+        </span>
+
       </section>
 
-
     </main>
-
-
-
   </body>
 </html>
