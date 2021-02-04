@@ -1,17 +1,39 @@
+<!--
+{% load static %}
+<%@ page contentTypes = "text/html"; charset = UTF-8 pageEncoding = "UTF-8"%>
+-->
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
     <title> 홈 //title </title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/home.css' %}" />
   </head>
 
 
   <body>
-    <section class = "input">
-      <form action = {% url 'data_process' %} method = "get">
-        <label> title 이름 들어가기 </label>
-        <input type="url" name = "Channel_Src">
-      </form>
-    </section>
+    <div class="wrap">
+      <div class="intro_bg">
+        <div class="header">
+          <div class="Youtubelink"
+          <li><a href="https://www.youtube.com/"></a>youtube</li>
+          </div>
+        </div>
+      </div>
+      <div class="center_bg">
+        <div class="emptyArea">
+        <div class="SearchArea">
+        <div class="SearchLogo"
+        <label> logo name </label>
+        </div>
+        <div class="SearchBox"
+          <form action = "" method = "get">
+            <input type="search"  placeholder="url input" size=80 >
+          </form>
+        </div>
+      
+        </div>
+        </div>
+      </div>
   </body>
 </html>

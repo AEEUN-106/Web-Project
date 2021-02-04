@@ -1,0 +1,71 @@
+@charset "UTF-8";
+
+*{ /*기본설정*/
+  list-style: none;
+  text-decoration: :none;
+  border-collapse: collapse;
+  margin:0px;
+  padding:0px;
+  color: #000;
+
+}
+
+.intro_bg{ /*배경 넣는 클래스*/
+  background-image:url("image/gcf.png");
+  width: 100%;
+  height: 200px;
+
+}
+
+.center_bg{ /*배경 넣는 클래스*/
+  background: blue;
+  width: 100%;
+  height: 100px;
+
+}
+.emptyArea{
+  display:flex;
+  width:1280px;
+  margin: auto;
+  background: black;
+  justify-content: center;
+
+}
+.SearchArea{
+  width: 700px;
+  height: 40px;
+  padding:12px 14px;
+  /*position: relative;*/
+  display: flex;
+  align-items: center;
+  background: green;
+  border-radius: 5px;
+  /*margin-top: 12px;*/
+}
+
+.SearchBox>form>input{
+  border:none;
+  height: 40px;
+  Background:rgba(0,0,0,0.0);
+  color:#fff;
+  padding-left:20px;
+}
+.SearchLogo{
+  background: white;
+  margin:5px;
+}
+.header{
+  display:flex;
+  width:1280px;
+  margin: auto;
+  background: red;
+  justify-content: flex-end;
+}
+
+.Youtubelink{
+  display:flex;
+  justify-content: center; /*내용 위치 어디에 넣을지*/
+  line-height: 86px; /* 내용 세로 위치 */
+  width: 90px;
+  background: blue;
+}
