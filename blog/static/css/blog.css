@@ -3,6 +3,12 @@
 
 }
 
+a[href = "https://www.youtube.com/"]{
+  text-decoration:none;
+  font-size:13px;
+  color: #c4302b;
+  font-weight: bold;
+}
 
 .Search{
   font-size: 15px;
@@ -21,7 +27,10 @@
 .ChannelInfo{
   border: 1px solid LightGrey;
   margin: 30px;
-  padding: 100px 0px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
 }
 
 .Sorting{
