@@ -29,15 +29,15 @@ def main_crawling(request):
     body = browser.find_element_by_tag_name('body')
     #content = browser.find_element_by_id('content')
 
-    for i in range(3):
+    # for i in range(3):
 
-        time.sleep(SCROLL_PAUSE_TIME)
-        height= browser.execute_script('return document.documentElement.scrollHeight')
+    #     time.sleep(SCROLL_PAUSE_TIME)
+    #     height= browser.execute_script('return document.documentElement.scrollHeight')
        
-        for i in range(5):
-            body.send_keys(Keys.END)
-            # body 본문에 END키를 입력(스크롤내림)
-            time.sleep(SCROLL_PAUSE_TIME)
+    #     for j in range(5):
+    #         body.send_keys(Keys.END)
+    #         # body 본문에 END키를 입력(스크롤내림)
+    #         time.sleep(SCROLL_PAUSE_TIME)
 
     soup = BeautifulSoup(browser.page_source, 'lxml')
 
@@ -53,11 +53,8 @@ def main_crawling(request):
     
     for video in all_videos:
 
-        # img = video.find('img',{'src':True})
-        # video_img.append(img['src'])
-
-        src = video.find('a',{'id':'thumbnail'})['href']+"https://www.youtube.com"
-        video_src.append(src)
+        Src = video.find('a',{'id':'thumbnail'})['href']+"https://www.youtube.com"
+        video_src.append(Src)
 
         title = video.find('a',{'id':'video-title'})['title']
         video_title.append(title)
@@ -71,6 +68,14 @@ def main_crawling(request):
         writing = video.find('yt-formatted-string',{'id':'description-text'}).text
         video_writing.append(writing)
 
+        try:
+            img = video.find('img',{'class':'style-scope yt-img-shadow'})
+            video_img.append(img['src'])
+        except:
+            continue
+
+
+        
 
     trending_videos = {"video_img":video_img, "video_src":video_src, "video_title":video_title, "video_channel_name":video_channel_name,"video_num":video_num, "video_writing":video_writing}
 
@@ -135,11 +140,12 @@ def crawling(get_url,request):
     subscriber_count = soup.find(id = "subscriber-count").text
     channel_img = soup.find(id = "img")['src']
 
-    channel_info = {"channel_url":url,"channel_name":channel_name,"subscriber_count":subscriber_count,"channel_img":channel_img}
+    
 
 
     # 채널의 영상 제목, 재생시간, 조회수, 업로드 시간 스크래핑
     all_videos = soup.find_all(id='dismissable')
+    video_img = []
     title_list = [] #제목
     video_time_list = [] #재생시간
     view_num_list = [] #조회수
@@ -147,7 +153,10 @@ def crawling(get_url,request):
     view_num_regexp = re.compile(r'조회수')
 
     for video in all_videos:
-        
+        img = video.find('img',{'src':True})
+        video_img.append(img['src'])
+
+
         title = video.find(id='video-title')
         title_list.append(title.text)
 
@@ -162,6 +171,8 @@ def crawling(get_url,request):
         temp = video_upload_time[1].text
         video_upload_time_list.append(temp)
 
+   
+    channel_info = {"channel_url":url,"channel_name":channel_name,"subscriber_count":subscriber_count,"channel_img":channel_img,"video_img":video_img}
     browser.quit()
     #return render(request, 'blog/post_list.html', {"channel_name":channel_name,"subscriber_count":subscriber_count,"channel_img":channel_img})
     return render(request, 'blog/post_list.html', channel_info)

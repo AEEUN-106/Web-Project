@@ -12,7 +12,6 @@
 
 
   <body>
-<<<<<<< Updated upstream
     <div class="wrap">
       <div class="intro_bg">
         <div class="header">
@@ -29,24 +28,13 @@
         </div>
         <section class="SearchBox">
            <form action = {% url 'data_process' %} method = "get">
-             <input type="url"  placeholder="url input" size=80 >
+             <input type="url"  name = "Channel_Src" placeholder="url input" size=80 >
           </form>
         </section>
         </div>
         </div>
       </div>
-=======
-    <section class = "input">
-      <form action = {% url 'data_process' %} method = "get">
-        <label> title 이름 들어가기 </label>
-        <input type="url" name = "Channel_Src">
-      </form>
-    </section>
 
-
-    <section class = "trending_videos">
-
-    </setcion>
->>>>>>> Stashed changes
+      <p>{{video_img}}</p>
   </body>
 </html>
