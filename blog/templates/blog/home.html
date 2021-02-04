@@ -26,12 +26,11 @@
         <div class="SearchLogo"
         <label> logo name </label>
         </div>
-        <div class="SearchBox"
-          <form action = "" method = "get">
-            <input type="search"  placeholder="url input" size=80 >
+        <section class="SearchBox">
+           <form action = {% url 'data_process' %} method = "get">
+             <input type="url"  placeholder="url input" size=80 >
           </form>
-        </div>
-      
+        </section>
         </div>
         </div>
       </div>
