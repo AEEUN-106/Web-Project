@@ -20,11 +20,11 @@ def main_crawling(request):
     #options.headless = True       #webpage open 유형
     options.add_argument("window-size=1920x1080")
     options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36")
-    browser = webdriver.Chrome(options=options) 
+    browser = webdriver.Chrome(options=options)
     browser.get(url)
 
     SCROLL_PAUSE_TIME = 0.5     # 한번 스크롤 하고 멈출 시간 설정
-   
+
 
     body = browser.find_element_by_tag_name('body')
     #content = browser.find_element_by_id('content')
@@ -33,7 +33,7 @@ def main_crawling(request):
 
     #     time.sleep(SCROLL_PAUSE_TIME)
     #     height= browser.execute_script('return document.documentElement.scrollHeight')
-       
+
     #     for j in range(5):
     #         body.send_keys(Keys.END)
     #         # body 본문에 END키를 입력(스크롤내림)
@@ -50,7 +50,7 @@ def main_crawling(request):
     video_num = []
     video_writing = []
 
-    
+
     for video in all_videos:
 
         Src = video.find('a',{'id':'thumbnail'})['href']+"https://www.youtube.com"
@@ -75,7 +75,7 @@ def main_crawling(request):
             continue
 
 
-        
+
 
     trending_videos = {"video_img":video_img, "video_src":video_src, "video_title":video_title, "video_channel_name":video_channel_name,"video_num":video_num, "video_writing":video_writing}
 
@@ -104,9 +104,9 @@ def crawling(get_url,request):
     #options.headless = True       #webpage open 유형
     options.add_argument("window-size=1920x1080")
     options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36")
-    browser = webdriver.Chrome(options=options) 
-    
-    
+    browser = webdriver.Chrome(options=options)
+
+
     #입력한 url을 처리해주는 부분
     #만약에 youtube 채널 홈화면의 url을 가지고 오는 경우에 따로 처리를 해주는 과정
     if "videos" in get_url:
@@ -117,7 +117,7 @@ def crawling(get_url,request):
     browser.get(url)
 
     SCROLL_PAUSE_TIME = 0.5     # 한번 스크롤 하고 멈출 시간 설정
-   
+
 
     body = browser.find_element_by_tag_name('body')
     # body태그를 선택하여 body에 넣음
@@ -140,7 +140,11 @@ def crawling(get_url,request):
     subscriber_count = soup.find(id = "subscriber-count").text
     channel_img = soup.find(id = "img")['src']
 
-    
+    try:
+        channel_img = soup.find(id = "img")['src']
+    except:
+        print("예외")
+
 
 
     # 채널의 영상 제목, 재생시간, 조회수, 업로드 시간 스크래핑
@@ -153,7 +157,7 @@ def crawling(get_url,request):
     view_num_regexp = re.compile(r'조회수')
 
     for video in all_videos:
-        
+
 
 
         title = video.find(id='video-title')
@@ -177,7 +181,7 @@ def crawling(get_url,request):
             continue
 
 
-   
+
     channel_info = {"channel_url":url,"channel_name":channel_name,"subscriber_count":subscriber_count,"channel_img":channel_img,"video_img":video_img}
     browser.quit()
     #return render(request, 'blog/post_list.html', {"channel_name":channel_name,"subscriber_count":subscriber_count,"channel_img":channel_img})
