@@ -153,8 +153,7 @@ def crawling(get_url,request):
     view_num_regexp = re.compile(r'조회수')
 
     for video in all_videos:
-        img = video.find('img',{'src':True})
-        video_img.append(img['src'])
+        
 
 
         title = video.find(id='video-title')
@@ -170,6 +169,13 @@ def crawling(get_url,request):
         video_upload_time = video.find_all('span',{'class':'style-scope ytd-grid-video-renderer'})
         temp = video_upload_time[1].text
         video_upload_time_list.append(temp)
+
+        try:
+            img = video.find('img',{'src':True})
+            video_img.append(img['src'])
+        except:
+            continue
+
 
    
     channel_info = {"channel_url":url,"channel_name":channel_name,"subscriber_count":subscriber_count,"channel_img":channel_img,"video_img":video_img}
