@@ -22,7 +22,7 @@
     <nav>
       <section class ="Search">
         <form action = {% url 'data_process' %} method="GET">
-          <label for = "youtubeChannel">input Chnnel's URL</label>
+          <label for = "youtubeChannel">INPUT CHNNEL'S URL</label>
           <input type="url" name = "Channel_Src">
           <input type = "image" name = "sumbit" src = "https://svgsilh.com/svg/1093183.svg" alt = "Enter" width = 20 height = 20>
         </form>
@@ -43,7 +43,7 @@
       <!-- 년도, 월 별 검색 및 정렬 -->
       <section class = "Sorting">
         <div>
-          <form action = "" method="post" style="float:right; margin:10px">
+          <form action = "" method="post">
             {%csrf_token%}
             {{form.as_p}}
             <select id="year" style="width:80px;height:30px;"
@@ -88,31 +88,37 @@
               <option value="오래된순">오래된순</option>
               <option value="조회순">조회순</option>
             </select>
-            <input type = "submit" value="검색"
-                class="btn btn-info btn-sm">
+            <button onclick="func()">검색</button>
+            <script>
+              function func(){
+                {{videos}}.reverse();
+              }
+            </script>
           </form>
         </div>
       </section>
 
       <!-- 해당 영상들 나오는 창-->
+      <!-- 썸네일, 채널의 영상 제목, 조회수, 업로드 시간 스크래핑 -->
       <section class = "Videos">
-        <span>
           {% for one_video in videos %}
+          <div id = "one_video">
             {% for video in one_video %}
               {% if "ytimg" in video%}
-                <img src = {{video}}>
-
+                <img src = {{video}} style="width:250px;height:140px"><br>
               {% elif "watch" in video %}
-                <a href = {{video}} target= "_blank">
+                <a href = {{video}} target= "_blank" style="text-decoration:none; color:#000000">
+              {% elif "조회수" in video %}
+                <span>{{video}}</span>
+              {% elif "전" in video %}
+                <span>{{video}}</span>
               {% else %}
-                <p>{{video}}</p>
-
+                <span>{{video}}<br></span>
               {% endif %}
             {% endfor %}
             </a>
+            </div>
           {% endfor %}
-        </span>
-
       </section>
 
     </main>

@@ -26,8 +26,8 @@ def main_crawling(request):
 
     body = browser.find_element_by_tag_name('body')
     #content = browser.find_element_by_id('content')
-  
-    
+
+
     # while True:
     #     last_height = browser.execute_script('return document.documentElement.scrollHeight')
     #     # 현재 화면의 길이를 리턴 받아 last_height에 넣음
@@ -42,7 +42,7 @@ def main_crawling(request):
 
     soup = BeautifulSoup(browser.page_source, 'lxml')
     all_videos = soup.find_all(id='dismissable')
-    
+
     videos = [] # 전체 영상들을 저장하는 list
 
     for video in all_videos:
@@ -53,16 +53,16 @@ def main_crawling(request):
 
         title = video.find('a',{'id':'video-title'})['title']
         one_video.append(title)
-    
+
         channel_name = video.find('a',{"class":"yt-simple-endpoint style-scope yt-formatted-string"}).text
         one_video.append(channel_name)
-     
+
         num = video.find('span',{"class":"style-scope ytd-video-meta-block"}).text
         one_video.append(num)
-     
+
         writing = video.find('yt-formatted-string',{'id':'description-text'}).text
         one_video.append(writing)
-     
+
         try:
             img = video.find('img',{'class':'style-scope yt-img-shadow'})
             one_video.append(img['src'])
@@ -70,7 +70,7 @@ def main_crawling(request):
             continue
 
         videos.append(one_video)
-    
+
     browser.quit()
     trending_vidoes = {"videos" : videos}
 
@@ -134,7 +134,7 @@ def crawling(get_url,request):
         print("예외")
 
 
-    
+
     # 채널의 영상 제목, 재생시간, 조회수, 업로드 시간 스크래핑
     all_videos = soup.find_all(id='dismissable')
     view_num_regexp = re.compile(r'조회수')
@@ -149,6 +149,12 @@ def crawling(get_url,request):
         Src = "https://www.youtube.com"+video.find('a',{'id':'thumbnail'})['href']
         one_video.append(Src)
 
+        try:
+            img = video.find('img',{'src':True})
+            one_video.append(img['src'])
+        except:
+            continue
+
         title = video.find(id='video-title')
         one_video.append(title.text)
 
@@ -156,21 +162,22 @@ def crawling(get_url,request):
         # one_video.append(video_time.text.strip())
 
         view_num = video.find('span',{'class':'style-scope ytd-grid-video-renderer'})
-        if view_num_regexp.search(view_num.text):
-            one_video.append(view_num.text)
-
-        video_upload_time = video.find_all('span',{'class':'style-scope ytd-grid-video-renderer'})
-        temp = video_upload_time[1].text
-        one_video.append(temp)
-
         try:
-            img = video.find('img',{'src':True})
-            one_video.append(img['src'])
+            if view_num_regexp.search(view_num.text):
+                one_video.append(view_num.text)
         except:
             continue
 
+        video_upload_time = video.find_all('span',{'class':'style-scope ytd-grid-video-renderer'})
+        if not video_upload_time[1]:
+            one_video.append(video_upload_time[0].text)
+        else:
+            temp = video_upload_time[1].text
+            one_video.append(temp)
+
+
         videos.append(one_video)
-  
+
     browser.quit()
     channel_info = {"videos" :videos,"channel_name":channel_name,"subscriber_count":subscriber_count,"channel_img":channel_img,"channel_url":url}
     return render(request, 'blog/post_list.html', channel_info)
