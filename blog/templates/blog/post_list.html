@@ -43,7 +43,7 @@
       <!-- 년도, 월 별 검색 및 정렬 -->
       <section class = "Sorting">
         <div>
-          <form action = {% url 'sorting' %} method="post" style="float:right; margin:10px">
+          <form action = {% url 'Sorting' %} method="GET" style="float:right; margin:10px">
             {%csrf_token%}
             {{form.as_p}}
             <select id="year" style="width:80px;height:30px;"
@@ -83,7 +83,7 @@
               <option value="11">11</option>
               <option value="12">12</option>
             </select>
-            <select id="sorting" style="width:80px;height:30px;">
+            <select name="sorting" style="width:80px;height:30px;">
               <option value="최신순">최신순</option>
               <option value="오래된순">오래된순</option>
               <option value="조회순">조회순</option>
