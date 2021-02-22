@@ -26,7 +26,7 @@ def main_crawling(request):
 
     body = browser.find_element_by_tag_name('body')
     #content = browser.find_element_by_id('content')
-    
+  
     
     # while True:
     #     last_height = browser.execute_script('return document.documentElement.scrollHeight')
@@ -38,6 +38,7 @@ def main_crawling(request):
     #     new_height = browser.execute_script('return document.documentElement.scrollHeight')
     #     if new_height == last_height:
     #         break;
+
 
     soup = BeautifulSoup(browser.page_source, 'lxml')
     all_videos = soup.find_all(id='dismissable')

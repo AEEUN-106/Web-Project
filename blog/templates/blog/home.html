@@ -26,14 +26,17 @@
         <div class="SearchLogo"
         <label> logo name </label>
         </div>
+
         <section class="SearchBox">
            <form action = {% url 'data_process' %} method = "get">
              <input type="url"  name = "Channel_Src" placeholder="url input" size=80 >
+
           </form>
         </section>
         </div>
         </div>
       </div>
+
         <div class="TrendingVideo">
           <span>
                 {% for one_video in videos %}
@@ -52,5 +55,6 @@
            
           </span>
           </div>
+
   </body>
 </html>
