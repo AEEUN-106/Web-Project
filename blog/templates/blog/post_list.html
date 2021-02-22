@@ -43,7 +43,7 @@
       <!-- 년도, 월 별 검색 및 정렬 -->
       <section class = "Sorting">
         <div>
-          <form action = "" method="post" style="float:right; margin:10px">
+          <form action = {% url 'sorting' %} method="post" style="float:right; margin:10px">
             {%csrf_token%}
             {{form.as_p}}
             <select id="year" style="width:80px;height:30px;"
@@ -103,7 +103,7 @@
                 <img src = {{video}}>
 
               {% elif "watch" in video %}
-                <a href = {{video}} target= "_blank">
+                <a href = {{video}} target= "_blank" style="text-decoration:none; color:#000000">
               {% else %}
                 <p>{{video}}</p>
 

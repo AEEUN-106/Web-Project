@@ -8,4 +8,6 @@ def post_list(request):
 def data_process(request):
     url = request.GET.get("Channel_Src")
     return crawling(url,request)
-    #return render(request, 'blog/data_process.html', {"url":url})
+
+def sorting(request):
+    

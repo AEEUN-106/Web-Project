@@ -1,4 +1,3 @@
-import requests
 from django.shortcuts import render
 from bs4 import BeautifulSoup
 from selenium import webdriver
@@ -9,6 +8,7 @@ import io
 import re
 
 def main_crawling(request):
+
     # youtube 정보를 한국어로 가지고 오는 방법
     sys.stdout = io.TextIOWrapper(sys.stdout.detach(), encoding = 'utf-8')
     sys.stderr = io.TextIOWrapper(sys.stderr.detach(), encoding = 'utf-8')
@@ -22,34 +22,26 @@ def main_crawling(request):
     browser = webdriver.Chrome(options=options)
     browser.get(url)
 
-    SCROLL_PAUSE_TIME = 0.5     # 한번 스크롤 하고 멈출 시간 설정
+    SCROLL_PAUSE_TIME = 0.15     # 한번 스크롤 하고 멈출 시간 설정
 
     body = browser.find_element_by_tag_name('body')
-    #content = browser.find_element_by_id('content')
-  
+   
+   # 스크롤 내리기
+    for i in range(15):
+        body.send_keys(Keys.PAGE_DOWN)
+        time.sleep(SCROLL_PAUSE_TIME)
     
-    # while True:
-    #     last_height = browser.execute_script('return document.documentElement.scrollHeight')
-    #     # 현재 화면의 길이를 리턴 받아 last_height에 넣음
-    #     for i in range(10):
-    #         body.send_keys(Keys.END)
-    #         # body 본문에 END키를 입력(스크롤내림)
-    #         time.sleep(SCROLL_PAUSE_TIME)
-    #     new_height = browser.execute_script('return document.documentElement.scrollHeight')
-    #     if new_height == last_height:
-    #         break;
-
-
     soup = BeautifulSoup(browser.page_source, 'lxml')
     all_videos = soup.find_all(id='dismissable')
-    
+    del all_videos[0]       # 첫번째 영상 중복을 없애기 위해서
+
     videos = [] # 전체 영상들을 저장하는 list
 
     for video in all_videos:
-
         one_video = []     # 영상 하나의 정보를 저장하는 list
+
         Src = "https://www.youtube.com"+video.find('a',{'id':'thumbnail'})['href']
-        one_video.append(Src)
+        one_video.append(Src)    
 
         title = video.find('a',{'id':'video-title'})['title']
         one_video.append(title)
@@ -104,8 +96,7 @@ def crawling(get_url,request):
 
     browser.get(url)
 
-    SCROLL_PAUSE_TIME = 0.5     # 한번 스크롤 하고 멈출 시간 설정
-
+    SCROLL_PAUSE_TIME = 0.15     # 한번 스크롤 하고 멈출 시간 설정
 
     body = browser.find_element_by_tag_name('body')
     # body태그를 선택하여 body에 넣음
