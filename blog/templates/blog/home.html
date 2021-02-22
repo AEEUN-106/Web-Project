@@ -36,9 +36,20 @@
       </div>
         <div class="TrendingVideo">
           <span>
-            {% for video_img_url in video_img %}
-              <img id='video_img_url' src={{video_img_url}}>
+                {% for one_video in videos %}
+                  {% for video in one_video %}
+                    {% if "watch" in video %}
+                      <a href = {{video}} target= "_blank">
+                    {% elif "ytimg" in video %}
+                        <img src = {{video}}>
+                    {% else %}
+                      <p>{{video}} </p>                     
+                    {% endif %}                  
+                  {% endfor %}              
+            </a>
             {% endfor %}
+
+           
           </span>
           </div>
   </body>

@@ -97,9 +97,20 @@
       <!-- 해당 영상들 나오는 창-->
       <section class = "Videos">
         <span>
-            {% for video_img_url in video_img %}
-              <img id='video_img_url' src={{video_img_url}}>
+          {% for one_video in videos %}
+            {% for video in one_video %}
+              {% if "ytimg" in video%}
+                <img src = {{video}}>
+
+              {% elif "watch" in video %}
+                <a href = {{video}} target= "_blank">
+              {% else %}
+                <p>{{video}}</p>
+
+              {% endif %}
             {% endfor %}
+            </a>
+          {% endfor %}
         </span>
 
       </section>

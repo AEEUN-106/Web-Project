@@ -14,7 +14,6 @@ def main_crawling(request):
     sys.stderr = io.TextIOWrapper(sys.stderr.detach(), encoding = 'utf-8')
     url = "https://www.youtube.com/feed/trending"
 
-
     # Chrome 창을 열지않고 스크래핑하는 part
     options = webdriver.ChromeOptions()
     #options.headless = True       #webpage open 유형
@@ -25,68 +24,56 @@ def main_crawling(request):
 
     SCROLL_PAUSE_TIME = 0.5     # 한번 스크롤 하고 멈출 시간 설정
 
-
     body = browser.find_element_by_tag_name('body')
     #content = browser.find_element_by_id('content')
-
-    # for i in range(3):
-
-    #     time.sleep(SCROLL_PAUSE_TIME)
-    #     height= browser.execute_script('return document.documentElement.scrollHeight')
-
-    #     for j in range(5):
+    
+    
+    # while True:
+    #     last_height = browser.execute_script('return document.documentElement.scrollHeight')
+    #     # 현재 화면의 길이를 리턴 받아 last_height에 넣음
+    #     for i in range(10):
     #         body.send_keys(Keys.END)
     #         # body 본문에 END키를 입력(스크롤내림)
     #         time.sleep(SCROLL_PAUSE_TIME)
+    #     new_height = browser.execute_script('return document.documentElement.scrollHeight')
+    #     if new_height == last_height:
+    #         break;
 
     soup = BeautifulSoup(browser.page_source, 'lxml')
-
     all_videos = soup.find_all(id='dismissable')
-
-    video_img = []
-    video_src = []
-    video_title = []
-    video_channel_name = []
-    video_num = []
-    video_writing = []
-
+    
+    videos = [] # 전체 영상들을 저장하는 list
 
     for video in all_videos:
 
-        Src = video.find('a',{'id':'thumbnail'})['href']+"https://www.youtube.com"
-        video_src.append(Src)
+        one_video = []     # 영상 하나의 정보를 저장하는 list
+        Src = "https://www.youtube.com"+video.find('a',{'id':'thumbnail'})['href']
+        one_video.append(Src)
 
         title = video.find('a',{'id':'video-title'})['title']
-        video_title.append(title)
-
+        one_video.append(title)
+    
         channel_name = video.find('a',{"class":"yt-simple-endpoint style-scope yt-formatted-string"}).text
-        video_channel_name.append(channel_name)
-
-        num = video.find('span',{'class':"style-scope ytd-video-meta-block"}).text
-        video_num.append(num)
-
+        one_video.append(channel_name)
+     
+        num = video.find('span',{"class":"style-scope ytd-video-meta-block"}).text
+        one_video.append(num)
+     
         writing = video.find('yt-formatted-string',{'id':'description-text'}).text
-        video_writing.append(writing)
-
+        one_video.append(writing)
+     
         try:
             img = video.find('img',{'class':'style-scope yt-img-shadow'})
-            video_img.append(img['src'])
+            one_video.append(img['src'])
         except:
             continue
 
-
-
-
-    trending_videos = {"video_img":video_img, "video_src":video_src, "video_title":video_title, "video_channel_name":video_channel_name,"video_num":video_num, "video_writing":video_writing}
-
+        videos.append(one_video)
+    
     browser.quit()
+    trending_vidoes = {"videos" : videos}
 
-    return render(request, 'blog/home.html',trending_videos)
-
-
-
-
-
+    return render(request, 'blog/home.html',trending_vidoes)
 
 
 
@@ -146,43 +133,43 @@ def crawling(get_url,request):
         print("예외")
 
 
-
+    
     # 채널의 영상 제목, 재생시간, 조회수, 업로드 시간 스크래핑
     all_videos = soup.find_all(id='dismissable')
-    video_img = []
-    title_list = [] #제목
-    video_time_list = [] #재생시간
-    view_num_list = [] #조회수
-    video_upload_time_list = [] #업로드 시간
     view_num_regexp = re.compile(r'조회수')
+
+    videos = []
+
 
     for video in all_videos:
 
+        one_video= []
 
+        Src = "https://www.youtube.com"+video.find('a',{'id':'thumbnail'})['href']
+        one_video.append(Src)
 
         title = video.find(id='video-title')
-        title_list.append(title.text)
+        one_video.append(title.text)
 
-        video_time = video.find('span',{'class' : 'style-scope ytd-thumbnail-overlay-time-status-renderer'})
-        video_time_list.append(video_time.text.strip())
+        # video_time = video.find('span',{'class' : 'style-scope ytd-thumbnail-overlay-time-status-renderer'})
+        # one_video.append(video_time.text.strip())
 
         view_num = video.find('span',{'class':'style-scope ytd-grid-video-renderer'})
         if view_num_regexp.search(view_num.text):
-            view_num_list.append(view_num.text)
+            one_video.append(view_num.text)
 
         video_upload_time = video.find_all('span',{'class':'style-scope ytd-grid-video-renderer'})
         temp = video_upload_time[1].text
-        video_upload_time_list.append(temp)
+        one_video.append(temp)
 
         try:
             img = video.find('img',{'src':True})
-            video_img.append(img['src'])
+            one_video.append(img['src'])
         except:
             continue
 
-
-
-    channel_info = {"channel_url":url,"channel_name":channel_name,"subscriber_count":subscriber_count,"channel_img":channel_img,"video_img":video_img}
+        videos.append(one_video)
+  
     browser.quit()
-    #return render(request, 'blog/post_list.html', {"channel_name":channel_name,"subscriber_count":subscriber_count,"channel_img":channel_img})
+    channel_info = {"videos" :videos,"channel_name":channel_name,"subscriber_count":subscriber_count,"channel_img":channel_img,"channel_url":url}
     return render(request, 'blog/post_list.html', channel_info)
