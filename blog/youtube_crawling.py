@@ -30,12 +30,12 @@ def main_crawling(request):
     SCROLL_PAUSE_TIME = 0.15     # 한번 스크롤 하고 멈출 시간 설정
 
     body = browser.find_element_by_tag_name('body')
-   
+
    # 스크롤 내리기
     for i in range(15):
         body.send_keys(Keys.PAGE_DOWN)
         time.sleep(SCROLL_PAUSE_TIME)
-    
+
     soup = BeautifulSoup(browser.page_source, 'lxml')
     all_videos = soup.find_all(id='dismissable')
     del all_videos[0]       # 첫번째 영상 중복을 없애기 위해서
@@ -46,20 +46,20 @@ def main_crawling(request):
         one_video = []     # 영상 하나의 정보를 저장하는 list
 
         Src = "https://www.youtube.com"+video.find('a',{'id':'thumbnail'})['href']
-        one_video.append(Src)    
+        one_video.append(Src)
 
         title = video.find('a',{'id':'video-title'})['title']
         one_video.append(title)
-    
+
         channel_name = video.find('a',{"class":"yt-simple-endpoint style-scope yt-formatted-string"}).text
         one_video.append(channel_name)
-     
+
         num = video.find('span',{"class":"style-scope ytd-video-meta-block"}).text
         one_video.append(num)
-     
+
         writing = video.find('yt-formatted-string',{'id':'description-text'}).text
         one_video.append(writing)
-     
+
         try:
             img = video.find('img',{'class':'style-scope yt-img-shadow'})
             one_video.append(img['src'])
@@ -67,8 +67,7 @@ def main_crawling(request):
             continue
 
         videos.append(one_video)
-    
-    
+
     browser.quit()
     trending_vidoes = {"videos" : videos}
 
@@ -97,7 +96,7 @@ def sort(sorting_method,request):
             if "주" not in video_info[0][3]:
                 video_info.reverse()
                 channel_info['videos'] = video_info
-    
+
     elif sorting_method == "조회순":
         for i in range(len(video_info)):
             for j in range(i, len(video_info)):
@@ -115,7 +114,7 @@ def sort(sorting_method,request):
                 #     a = a[4:hun_million]
                 # else:
                 #     a = a[4:a.find("회")]
-                
+
                 print("---------------                " + a)
                 # if thousand != 0:
                 #     a = a[4:thousand-1]
@@ -153,13 +152,13 @@ def sort(sorting_method,request):
                 #     video_info[i] = video_info[j]
                 #     video_info[j] = temp
 
-                
-                
 
 
-                
 
-            
+
+
+
+
 
 
     return render(request,'blog/post_list.html',channel_info)
@@ -218,7 +217,7 @@ def crawling(get_url,request):
         print("예외")
 
 
-    
+
     # 채널의 영상 제목, 재생시간, 조회수, 업로드 시간 스크래핑
     all_videos = soup.find_all(id='dismissable')
     view_num_regexp = re.compile(r'조회수')
@@ -251,12 +250,20 @@ def crawling(get_url,request):
         temp = video_upload_time[1].text
         one_video.append(temp)
 
-        
+
+
+        video_upload_time = video.find_all('span',{'class':'style-scope ytd-grid-video-renderer'})
+        if not video_upload_time[1]:
+            one_video.append(video_upload_time[0].text)
+        else:
+            temp = video_upload_time[1].text
+            one_video.append(temp)
+
 
         videos.append(one_video)
 
-    
-  
+
+
     browser.quit()
     channel_info = {"videos" :videos,"channel_name":channel_name,"subscriber_count":subscriber_count,"channel_img":channel_img,"channel_url":url}
 
