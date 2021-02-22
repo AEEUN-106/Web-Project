@@ -16,9 +16,10 @@
       <div class="intro_bg">
         <div class="header">
           <div class="Youtubelink"
-          <li><a href="https://www.youtube.com/"></a>youtube</li>
+          <li><a href="https://www.youtube.com/"target  = "_blank">Youtube</a>
           </div>
         </div>
+
       </div>
       <div class="center_bg">
         <div class="emptyArea">
@@ -26,35 +27,36 @@
         <div class="SearchLogo"
         <label> logo name </label>
         </div>
-
         <section class="SearchBox">
            <form action = {% url 'data_process' %} method = "get">
              <input type="url"  name = "Channel_Src" placeholder="url input" size=80 >
-
+               <input id="sbutton" type = "image" name = "sumbit" src = "https://svgsilh.com/svg/1093183.svg" alt = "Enter" width = 20 height = 20>
           </form>
         </section>
         </div>
         </div>
       </div>
-
+      <div class="main">
         <div class="TrendingVideo">
-          <span>
+          <span id="arrangement">
                 {% for one_video in videos %}
+                <span id="one_video">
                   {% for video in one_video %}
                     {% if "watch" in video %}
                       <a href = {{video}} target= "_blank">
+                    {% elif "조회수" in video %}
+                      <span id= "hits">{{video}}<br></span>
                     {% elif "ytimg" in video %}
-                        <img src = {{video}}>
-                    {% else %}
-                      <p>{{video}} </p>                     
-                    {% endif %}                  
-                  {% endfor %}              
-            </a>
-            {% endfor %}
-
-           
+                      <img id='video_img_url'src = {{video}}> <br>
+                    {% else %}  <!-- 제목이랑 채널명 -->
+                      <span id= "tcname">{{video}} </span>
+                    {% endif %}
+                  {% endfor %}
+                      </a>
+                </span>
+                {% endfor %}
           </span>
-          </div>
-
+      </div>
+      </div>
   </body>
 </html>

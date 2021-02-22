@@ -45,15 +45,21 @@
 
 .SearchBox>form>input{
   border:none;
-  height: 40px;
-  Background:rgba(0,0,0,0.0);
-  color:#fff;
+  height: 30px;
+  Background:white;
+  color:black;
   padding-left:20px;
 }
+
 .SearchLogo{
   background: white;
   margin:5px;
 }
+
+/*#sbutton{
+  margin-top: 3px;
+}*/
+
 .header{
   display:flex;
   width:1280px;
@@ -61,6 +67,13 @@
   background: red;
   justify-content: flex-end;
 }
+
+/*.ad_banner{
+    display: flex;
+    background-image:url("image/ad.jpg");
+    width: 900px;
+    height: 10px;
+}*/
 
 .Youtubelink{
   display:flex;
@@ -70,11 +83,69 @@
   background: blue;
 }
 
+a[href = "https://www.youtube.com/"]{
+  text-decoration:none;
+  font-size:15px;
+  color: #c4302b;
+  font-weight: bold;
+  text-align: right;
+  position: relative;
+}
+
+.main{
+  background: gray;
+  width: 100%;
+  height: auto;
+  margin: auto;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
 .TrendingVideo{
-  margin: 30px;
+  display: flex;
+  background: white;
+  margin: 0px 150px 50px 150px;
   padding: 50px 10px 30px 10px;
+  /*justify-content: center;*/
+  flex-flow: wrap;
+
 }
 
 .TrendingVideo #video_img_url{
+  width: 230px;
   padding: 5px;
 }
+
+.TrendingVideo #one_video{
+  border: 1px solid #c4302b;
+  height:200px;
+  width: 250px;
+  margin-bottom: 24px;
+  margin-right: 4px;
+  flex-direction: :row;
+  display: inline-block;
+  justify-cotent: space-evenly; }
+
+.TrendingVideo #hits{
+  text-decoration:none;
+  color:#000000 }
+
+  .TrendingVideo #tcname{/* 한 줄 자르기 */
+    width: 230px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis; /* 여러 줄 자르기 추가 스타일 */
+    white-space: normal;
+    /*line-height: 1.2;*/
+    text-align: left;
+    word-wrap: break-word;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    text-decoration:none;
+    color:#000000 }
+
+.TrendingVideo #arrangement{
+    padding-left: 70px;
+    padding-right: 70px;}
